@@ -52,7 +52,7 @@ const index = async (ctx, next) => {
   console.log('---------------- go to index')
   //一些业务逻辑获得数据
   let renderData = {
-    title: 'A Lovely Girl',
+    title: 'A Lovely Girl: Kelly Wang',
     num: '100',
     picture: '/img/wjy.jpg'
   }
