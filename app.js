@@ -70,7 +70,7 @@ router.get('/',
     console.log('---------------- go to index')
     let renderData = {
       title: 'A Lovely Girl: Kelly Wang',
-      num: '100',
+      content: 'She is gorgeous 10-year-old girl ',
       picture: '/img/wjy.jpg'
     }
     await ctx.render('index', renderData)

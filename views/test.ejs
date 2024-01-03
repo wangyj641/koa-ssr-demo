@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Koa SSR Demo</title>
-</head>
-<body>
-<!--头部导航-->
+  </head>
+  <body>
+    <!--头部导航-->
 
-<h3><%= title %></h3>
+    <h3><%= title %></h3>
 
-<div>
-    <a href="/">Index</a>
-    <a href="/about">About</a>
-    <a href="/world">World</a>
-</div><h1>World</h1>
+    <div>
+      <a href="/">Index</a>
+      <a href="/about">About</a>
+      <a href="/world">World</a>
+    </div>
+    <h1>World</h1>
 
-<script>
-var httpRequest = new XMLHttpRequest()
-    httpRequest.open(\'POST\', \'postdata\', true)
-    httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded")
-    httpRequest.send(\'name=teswe&ee=ef\')
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = httpRequest.responseText
-            console.log(json)
-        }
-    }
-</script>
+    <script>
+      var httpRequest = new XMLHttpRequest()
+          httpRequest.open(\'POST\', \'postdata\', true)
+          httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+          httpRequest.send(\'name=teswe&ee=ef\')
+          httpRequest.onreadystatechange = function () {
+              if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                  var json = httpRequest.responseText
+                  console.log(json)
+              }
+          }
+    </script>
 
-<!--底部-->
-</body>
+    <!--底部-->
+  </body>
 </html>
