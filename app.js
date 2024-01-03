@@ -74,7 +74,8 @@ router.get('/',
       picture: '/img/wjy.jpg'
     }
     await ctx.render('index', renderData)
-  })
+  }
+)
 
 router.get('/about',
   async (ctx, next) => {
@@ -88,15 +89,13 @@ router.get('/world',
     ctx.body = world_html
   })
 
-router.get('/detail',
+router.get('/test',
   async (ctx, next) => {
-    console.log('---------------- go to detail')
+    console.log('---------------- go to test')
     let renderData = {
-      title: 'Introduction',
-      num: '100',
-      picture: '/img/wjy.jpg'
+      title: 'test',
     }
-    await ctx.render('detail', renderData)
+    await ctx.render('test', renderData)
   })
 
 router.get('/*',
