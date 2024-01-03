@@ -54,20 +54,19 @@ const CONFIG = {
 
 app.use(session(CONFIG, app))
 
-app.use(async (ctx, next) => {
-  console.log('---------------- go to session')
-  // ignore favicon
-  if (ctx.path === '/favicon.ico') return;
-  let n = ctx.session.views || 0;
-  ctx.session.views = ++n;
-  ctx.session.token = ctx.session.token ? ctx.session.token : 'FLBNB'
-  //console.log('ctx.session:', ctx.session)
-  await next()
-})
+// app.use(async (ctx, next) => {
+//   console.log('---------------- go to session')
+//   // ignore favicon
+//   if (ctx.path === '/favicon.ico') return;
+//   let n = ctx.session.views || 0;
+//   ctx.session.views = ++n;
+//   ctx.session.token = ctx.session.token ? ctx.session.token : 'FLBNB'
+//   //console.log('ctx.session:', ctx.session)
+//   await next()
+// })
 
 const index = async (ctx, next) => {
   console.log('---------------- go to index')
-  //一些业务逻辑获得数据
   let renderData = {
     title: 'A Lovely Girl: Kelly Wang',
     num: '100',
@@ -76,6 +75,24 @@ const index = async (ctx, next) => {
   await ctx.render('index', renderData)
 }
 
+const detail = async (ctx, next) => {
+  console.log('---------------- go to detail')
+  let renderData = {
+    title: 'Introduction',
+    num: '100',
+    picture: '/img/wjy.jpg'
+  }
+  await ctx.render('detail', renderData)
+}
+
+const notFound = async (ctx, next) => {
+  console.log('---------------- go to notFound')
+  let renderData = {
+    title: 'Error',
+    content: 'Not found this page'
+  }
+  await ctx.render('notFound', renderData)
+}
 const about = async (ctx, next) => {
   console.log('---------------- go to about')
   ctx.body = '<div><a href="/">Index</a>&nbsp;&nbsp;&nbsp;<a href="/about">About</a>&nbsp;&nbsp;&nbsp;<a href="/world">World</a></div><h1>About</h1>'
@@ -87,14 +104,16 @@ const world = async (ctx, next) => {
 }
 
 const postdata = async (ctx, next) => {
-  console.log('解析后的请求体:', ctx.request.body)// { name: 'teswe', ee: 'ef' }
-  console.log('原始的请求体:', ctx.request.rawBody)// name=teswe&ee=ef
-  ctx.body = world_html
+  console.log('------------------------------- post data')
+  //console.log('解析后的请求体:', ctx.request.body)
+  //console.log('原始的请求体:', ctx.request.rawBody)
 }
 
 router.get('/', index)
 router.get('/about', about)
 router.get('/world', world)
+router.get('/detail', detail)
+router.get('/*', notFound)
 router.post('/postdata', postdata)
 
 app.use(router.routes(), router.allowedMethods())
