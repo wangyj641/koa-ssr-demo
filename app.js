@@ -23,21 +23,6 @@ const world_html =
   '    }\n' +
   '};</script>'
 
-// ctx.render need it
-app.use(views(__dirname + '/views', {
-  extension: 'ejs'
-}))
-
-app.use(bodyParser({
-  enableTypes: ['json', 'form', 'text']
-}))
-
-app.use(static(
-  __dirname + '/public'
-))
-
-app.keys = ['1233211234567']
-
 const CONFIG = {
   key: 'FLB-SESSION', /** (string) cookie key (default is koa:sess) */
   /** (number || 'session') maxAge in ms (default is 1 days) */
@@ -52,18 +37,32 @@ const CONFIG = {
   renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
 }
 
+app.use(views(__dirname + '/views', {
+  extension: 'ejs'
+}))
+
+app.use(bodyParser({
+  enableTypes: ['json', 'form', 'text']
+}))
+
+app.use(static(
+  __dirname + '/public'
+))
+
+app.keys = ['1233211234567']
+
 app.use(session(CONFIG, app))
 
-// app.use(async (ctx, next) => {
-//   console.log('---------------- go to session')
-//   // ignore favicon
-//   if (ctx.path === '/favicon.ico') return;
-//   let n = ctx.session.views || 0;
-//   ctx.session.views = ++n;
-//   ctx.session.token = ctx.session.token ? ctx.session.token : 'FLBNB'
-//   //console.log('ctx.session:', ctx.session)
-//   await next()
-// })
+app.use(async (ctx, next) => {
+  console.log('---------------- go to session')
+  console.log(ctx)
+  // ignore favicon
+  if (ctx.path === '/favicon.ico') return;
+  let n = ctx.session.views || 0;
+  ctx.session.views = ++n;
+  ctx.session.token = ctx.session.token ? ctx.session.token : 'FLBNB'
+  await next()
+})
 
 router.get('/',
   async (ctx, next) => {
