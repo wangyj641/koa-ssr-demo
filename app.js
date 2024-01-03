@@ -65,56 +65,56 @@ app.use(session(CONFIG, app))
 //   await next()
 // })
 
-const index = async (ctx, next) => {
-  console.log('---------------- go to index')
-  let renderData = {
-    title: 'A Lovely Girl: Kelly Wang',
-    num: '100',
-    picture: '/img/wjy.jpg'
-  }
-  await ctx.render('index', renderData)
-}
+router.get('/',
+  async (ctx, next) => {
+    console.log('---------------- go to index')
+    let renderData = {
+      title: 'A Lovely Girl: Kelly Wang',
+      num: '100',
+      picture: '/img/wjy.jpg'
+    }
+    await ctx.render('index', renderData)
+  })
 
-const detail = async (ctx, next) => {
-  console.log('---------------- go to detail')
-  let renderData = {
-    title: 'Introduction',
-    num: '100',
-    picture: '/img/wjy.jpg'
-  }
-  await ctx.render('detail', renderData)
-}
+router.get('/about',
+  async (ctx, next) => {
+    console.log('---------------- go to about')
+    ctx.body = '<div><a href="/">Index</a>&nbsp;&nbsp;&nbsp;<a href="/about">About</a>&nbsp;&nbsp;&nbsp;<a href="/world">World</a></div><h1>About</h1>'
+  })
 
-const notFound = async (ctx, next) => {
-  console.log('---------------- go to notFound')
-  let renderData = {
-    title: 'Error',
-    content: 'Not found this page'
-  }
-  await ctx.render('notFound', renderData)
-}
-const about = async (ctx, next) => {
-  console.log('---------------- go to about')
-  ctx.body = '<div><a href="/">Index</a>&nbsp;&nbsp;&nbsp;<a href="/about">About</a>&nbsp;&nbsp;&nbsp;<a href="/world">World</a></div><h1>About</h1>'
-}
+router.get('/world',
+  async (ctx, next) => {
+    console.log('---------------- go to world')
+    ctx.body = world_html
+  })
 
-const world = async (ctx, next) => {
-  console.log('---------------- go to world')
-  ctx.body = world_html
-}
+router.get('/detail',
+  async (ctx, next) => {
+    console.log('---------------- go to detail')
+    let renderData = {
+      title: 'Introduction',
+      num: '100',
+      picture: '/img/wjy.jpg'
+    }
+    await ctx.render('detail', renderData)
+  })
 
-const postdata = async (ctx, next) => {
-  console.log('------------------------------- post data')
-  //console.log('解析后的请求体:', ctx.request.body)
-  //console.log('原始的请求体:', ctx.request.rawBody)
-}
+router.get('/*',
+  async (ctx, next) => {
+    console.log('---------------- go to notFound')
+    let renderData = {
+      title: 'Error',
+      content: 'Not found this page'
+    }
+    await ctx.render('notFound', renderData)
+  })
 
-router.get('/', index)
-router.get('/about', about)
-router.get('/world', world)
-router.get('/detail', detail)
-router.get('/*', notFound)
-router.post('/postdata', postdata)
+router.post('/postdata',
+  async (ctx, next) => {
+    console.log('------------------------------- post data')
+    //console.log('解析后的请求体:', ctx.request.body)
+    //console.log('原始的请求体:', ctx.request.rawBody)
+  })
 
 app.use(router.routes(), router.allowedMethods())
 
