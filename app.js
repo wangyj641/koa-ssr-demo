@@ -55,8 +55,7 @@ app.use(session(CONFIG, app))
 
 app.use(async (ctx, next) => {
   console.log('---------------- go to session')
-  console.log(ctx)
-  // ignore favicon
+  //console.log(ctx)
   if (ctx.path === '/favicon.ico') return;
   let n = ctx.session.views || 0;
   ctx.session.views = ++n;
@@ -95,6 +94,12 @@ router.get('/test',
       title: 'test',
     }
     await ctx.render('test', renderData)
+  })
+
+router.get('/api/xxx',
+  async (ctx, next) => {
+    console.log('---------------- api/xxx')
+    ctx.body = 'hello, api xxx'
   })
 
 router.get('/*',
